@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #042C53 0%, #185FA5 60%, #378ADD 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .reg-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 24px 64px rgba(4, 44, 83, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reg-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #E6F1FB;
+      z-index: 0;
+    }
+
+    .reg-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #B5D4F4;
+      z-index: 0;
+    }
+
+    .reg-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #042C53;
+      margin-bottom: 0.25rem;
+    }
+
+    .reg-sub {
+      font-size: 14px;
+      color: #378ADD;
+      margin-bottom: 1.75rem;
+    }
+
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #0C447C;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .field-inner {
+      position: relative;
+    }
+
+    .field-inner .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #85B7EB;
+      stroke-width: 1.8;
+      fill: none;
+      pointer-events: none;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 10px 12px 10px 38px;
+      border: 1.5px solid #B5D4F4;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #042C53;
+      background: #F8FBFF;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus {
+      border-color: #185FA5;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+    }
+
+    .field input::placeholder {
+      color: #85B7EB;
+    }
+
+    .toggle-eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-eye svg {
+      width: 16px;
+      height: 16px;
+      stroke: #85B7EB;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 12px;
+      color: #185FA5;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .reg-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #042C53, #185FA5);
+      color: #ffffff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1.25rem;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .reg-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .reg-btn:active {
+      transform: scale(0.98);
+    }
+
+    .reg-footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 13px;
+      color: #378ADD;
+    }
+
+    .reg-footer a {
+      color: #185FA5;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .error-msg {
+      display: none;
+      font-size: 12px;
+      color: #E24B4A;
+      margin-top: 5px;
+    }
+
+    .error-border {
+      border-color: #E24B4A !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reg-card">
+    <div class="reg-content">
+
+      <h2>Welcome back</h2>
+      <p class="reg-sub">Sign in to your account</p>
+
+      <form method="post" action="LoginServlet" onsubmit="return validateForm(event)">
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <div class="field-inner">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input
+              type="email"
+              id="email"
+              name="emailId"
+              placeholder="jane@example.com"
+              autocomplete="email"
+            />
+          </div>
+          <span class="error-msg" id="emailErr">Please enter a valid email address.</span>
+        </div>
+
+        <div class="field">
+          <label for="pwd">Password</label>
+          <div class="field-inner">
+            <svg class="icon" viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            <input
+              type="password"
+              id="pwd"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button class="toggle-eye" type="button" onclick="togglePwd()">
+              <svg viewBox="0 0 24 24" id="eyeIcon">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <span class="error-msg" id="pwdErr">Please enter your password.</span>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="reg-btn">Sign in &rarr;</button>
+
+      </form>
+
+      <div class="reg-footer">
+        Don't have an account? <a href="registration_form.html">Register</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function togglePwd() {
+      const inp = document.getElementById('pwd');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    function validateForm(e) {
+      const email = document.getElementById('email');
+      const pwd   = document.getElementById('pwd');
+      const emailErr = document.getElementById('emailErr');
+      const pwdErr   = document.getElementById('pwdErr');
+      let valid = true;
+
+      if (!email.value.trim()) {
+        email.classList.add('error-border');
+        emailErr.style.display = 'block';
+        valid = false;
+      } else {
+        email.classList.remove('error-border');
+        emailErr.style.display = 'none';
+      }
+
+      if (!pwd.value.trim()) {
+        pwd.classList.add('error-border');
+        pwdErr.style.display = 'block';
+        valid = false;
+      } else {
+        pwd.classList.remove('error-border');
+        pwdErr.style.display = 'none';
+      }
+
+      if (!valid) {
+        e.preventDefault();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+
+</body>
+</html>

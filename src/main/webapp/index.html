@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #042C53 0%, #185FA5 60%, #378ADD 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .reg-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 24px 64px rgba(4, 44, 83, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reg-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #E6F1FB;
+      z-index: 0;
+    }
+
+    .reg-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #B5D4F4;
+      z-index: 0;
+    }
+
+    .reg-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #042C53;
+      margin-bottom: 0.25rem;
+    }
+
+    .reg-sub {
+      font-size: 14px;
+      color: #378ADD;
+      margin-bottom: 1.75rem;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #0C447C;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .field-inner {
+      position: relative;
+    }
+
+    .field-inner .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #85B7EB;
+      stroke-width: 1.8;
+      fill: none;
+      pointer-events: none;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 10px 12px 10px 38px;
+      border: 1.5px solid #B5D4F4;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #042C53;
+      background: #F8FBFF;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus {
+      border-color: #185FA5;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+    }
+
+    .field input::placeholder {
+      color: #85B7EB;
+    }
+
+    .field input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0.4;
+      cursor: pointer;
+    }
+
+    .toggle-eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-eye svg {
+      width: 16px;
+      height: 16px;
+      stroke: #85B7EB;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .strength-bar {
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 6px;
+      background: #E6F1FB;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      transition: width 0.3s, background 0.3s;
+      background: #B5D4F4;
+    }
+
+    .strength-label {
+      font-size: 11px;
+      color: #378ADD;
+      margin-top: 3px;
+      min-height: 14px;
+    }
+
+    .reg-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #042C53, #185FA5);
+      color: #ffffff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .reg-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .reg-btn:active {
+      transform: scale(0.98);
+    }
+
+    .reg-footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 13px;
+      color: #378ADD;
+    }
+
+    .reg-footer a {
+      color: #185FA5;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+      font-size: 14px;
+      color: #0C447C;
+      background: #E6F1FB;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .error-border {
+      border-color: #E24B4A !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reg-card">
+    <div class="reg-content">
+      <h2>Create account</h2>
+      <p class="reg-sub">Fill in your details to get started</p>
+
+      <form method="post" action="RegistrationServlet" onsubmit="return validateForm(event)">
+
+        <div class="row-2">
+          <div class="field">
+            <label for="fname">First name</label>
+            <div class="field-inner">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="fname" name="firstName" placeholder="Jane" autocomplete="given-name"/>
+            </div>
+          </div>
+          <div class="field">
+            <label for="lname">Last name</label>
+            <div class="field-inner">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="lname" name="lastName" placeholder="Doe" autocomplete="family-name"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <div class="field-inner">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="email" name="emailId" placeholder="jane@example.com" autocomplete="email"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="dob">Date of birth</label>
+          <div class="field-inner">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <input type="date" id="dob" name="dateOfBirth"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pwd">Password</label>
+          <div class="field-inner">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <input type="password" id="pwd" name="password" placeholder="Min. 8 characters" oninput="checkStrength(this.value)"/>
+            <button class="toggle-eye" type="button" onclick="togglePwd()">
+              <svg viewBox="0 0 24 24" id="eyeIcon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="sfill"></div></div>
+          <div class="strength-label" id="slabel"></div>
+        </div>
+
+        <button type="submit" class="reg-btn">Create my account &rarr;</button>
+        <div class="success-msg" id="successMsg">All fields valid — submitting to RegistrationServlet!</div>
+
+      </form>
+
+      <div class="reg-footer">Already have an account? <a href="#">Sign in</a></div>
+    </div>
+  </div>
+
+  <script>
+    function checkStrength(val) {
+      const fill = document.getElementById('sfill');
+      const label = document.getElementById('slabel');
+      if (!val) { fill.style.width = '0%'; label.textContent = ''; return; }
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const levels = [
+        ['25%', '#E24B4A', 'Weak'],
+        ['50%', '#EF9F27', 'Fair'],
+        ['75%', '#378ADD', 'Good'],
+        ['100%', '#1D9E75', 'Strong']
+      ];
+      const [w, c, t] = levels[score - 1] || ['0%', '#B5D4F4', ''];
+      fill.style.width = w;
+      fill.style.background = c;
+      label.textContent = t ? 'Strength: ' + t : '';
+      label.style.color = c;
+    }
+
+    function togglePwd() {
+      const inp = document.getElementById('pwd');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    function validateForm(e) {
+      const fields = ['fname', 'lname', 'email', 'dob', 'pwd'];
+      let valid = true;
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.classList.add('error-border');
+          valid = false;
+        } else {
+          el.classList.remove('error-border');
+        }
+      });
+      if (!valid) {
+        e.preventDefault();
+        return false;
+      }
+      document.getElementById('successMsg').style.display = 'block';
+      return true;
+    }
+  </script>
+
+</body>
+</html>
