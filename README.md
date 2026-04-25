@@ -45,7 +45,15 @@ This project follows the MVC pattern:
 4. Logout → session invalidated → redirected to login  
 
 ---
+## Screen shorts
+1.LoginPage (screenshots/login.png)
+2.RegistrationPage (screenshots/Registration.png)
+3.WelcomePage (screenshots/welcome.png)
+4.SuccessPage (screenshots/success.png)
+5.sqltable (screenshots/table.png)
 
+
+---
 ## 🗄️ Database Schema
 
 **Table Name:** `AccountDetails`
